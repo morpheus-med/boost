@@ -12,9 +12,9 @@ bash "install-boost" do
   code <<-EOH
   tar xzvf #{node['boost']['file']}
   cd #{node['boost']['build_dir']}
-  ./bootstrap.sh && ./bjam install
+  ./bootstrap.sh --without-libraries=python && ./bjam -j #{node['boost']['build_jobs']} install
   EOH
-  not_if "/sbin/ldconfig -v | grep boost"
+  not_if "/sbin/ldconfig -v | grep libboost_*.so.#{node['boost']['version']}"
 end
 
 execute "ldconfig" do
