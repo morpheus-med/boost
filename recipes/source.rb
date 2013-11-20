@@ -10,11 +10,11 @@ bash "install-boost" do
   user "root"
   cwd Chef::Config[:file_cache_path]
   code <<-EOH
-  tar xzvf #{node['boost']['file']}
+  tar xzf #{node['boost']['file']}
   cd #{node['boost']['build_dir']}
   ./bootstrap.sh --without-libraries=python && ./bjam -j #{node['boost']['build_jobs']} install
   EOH
-  not_if "/sbin/ldconfig -v | grep libboost_*.so.#{node['boost']['version']}"
+  not_if "/sbin/ldconfig -v | grep libboost_.*.so.#{node['boost']['version']}"
 end
 
 execute "ldconfig" do
