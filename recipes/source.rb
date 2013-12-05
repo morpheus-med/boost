@@ -14,7 +14,7 @@ bash "install-boost" do
   cd #{node['boost']['build_dir']}
   ./bootstrap.sh --without-libraries=python && ./bjam -j #{node['boost']['build_jobs']} install
   EOH
-  not_if "/sbin/ldconfig -v | grep libboost_.*.so.#{node['boost']['version']}"
+  not_if "/sbin/ldconfig -v | grep 'libboost_chrono.so.#{node['boost']['version']}'"
 end
 
 execute "ldconfig" do
